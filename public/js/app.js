@@ -446,6 +446,7 @@ function renderReports(reports) {
     }
 
     const isDoctorOrAdmin = currentUser && (currentUser.role === 'Doctor' || currentUser.role === 'Admin');
+    const canDelete = currentUser && (currentUser.role === 'Lab Staff' || currentUser.role === 'Admin' || currentUser.role === 'Doctor');
 
     filtered.forEach(r => {
         const card = document.createElement('div');
@@ -469,6 +470,15 @@ function renderReports(reports) {
             editBtnHtml = `
                 <button class="btn btn-edit" onclick="openEditReportModal('${escapeHtml(r.reportId)}')">
                     ✏️ Edit Notes
+                </button>
+            `;
+        }
+
+        let deleteBtnHtml = '';
+        if (canDelete) {
+            deleteBtnHtml = `
+                <button class="btn btn-delete" onclick="confirmDeleteReport('${escapeHtml(r.reportId)}', '${escapeHtml(r.title)}')" title="Delete test report from consortium registry">
+                    🗑️ Delete
                 </button>
             `;
         }
@@ -520,6 +530,7 @@ function renderReports(reports) {
                 <button class="btn btn-share" onclick="openShareModal('${escapeHtml(r.reportId)}', '${escapeHtml(r.title)}')">
                     ⏱️ Share
                 </button>
+                ${deleteBtnHtml}
             </div>
         `;
 
@@ -1409,6 +1420,7 @@ async function openReportModal(reportId) {
     const downloadBtn = document.getElementById('modalDownloadBtn');
     const openPdfTabBtn = document.getElementById('modalOpenPdfTabBtn');
     const editBtn = document.getElementById('modalDoctorEditBtn');
+    const deleteBtn = document.getElementById('modalDeleteBtn');
     const remarksSection = document.getElementById('modalDoctorRemarksSection');
     const remarksContent = document.getElementById('modalDoctorRemarksContent');
     const pdfFrame = document.getElementById('modalPdfFrame');
@@ -1429,6 +1441,19 @@ async function openReportModal(reportId) {
         };
     } else {
         editBtn.style.display = 'none';
+    }
+
+    // Delete button inside modal
+    const canDelete = currentUser && (currentUser.role === 'Lab Staff' || currentUser.role === 'Admin' || currentUser.role === 'Doctor');
+    if (deleteBtn) {
+        if (canDelete) {
+            deleteBtn.style.display = 'inline-flex';
+            deleteBtn.onclick = () => {
+                confirmDeleteReport(reportId, title.textContent, true);
+            };
+        } else {
+            deleteBtn.style.display = 'none';
+        }
     }
 
     modal.classList.add('active');
@@ -1599,6 +1624,41 @@ async function downloadReportFile(reportId, preferredFileName) {
         showToast('✅ Authentic PDF decrypted & downloaded successfully! (Anti-forgery QR verified)', 'success');
     } catch (err) {
         showToast(`❌ Download error: ${err.message}`, 'error');
+    }
+}
+
+/**
+ * Delete a test report with confirmation prompt
+ */
+async function confirmDeleteReport(reportId, reportTitle, closeCurrentModal = false) {
+    const titleText = reportTitle || reportId;
+    if (!confirm(`Are you sure you want to delete report "${titleText}" (${reportId})?\n\nThis will remove the off-chain encrypted file and unlist it from the active registry.`)) {
+        return;
+    }
+
+    try {
+        showToast(`🗑️ Deleting report ${reportId}...`, 'info');
+        const res = await fetch(`/api/reports/${encodeURIComponent(reportId)}`, {
+            method: 'DELETE',
+            headers: getAuthHeaders()
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+            throw new Error(data.message || 'Failed to delete report');
+        }
+
+        showToast(`✓ ${data.message || 'Report deleted successfully'}`, 'success');
+        if (closeCurrentModal) {
+            closeModal('viewReportModal');
+        }
+        await loadReports();
+        await loadTimeline();
+        await loadStats();
+        await loadBlockchain();
+    } catch (err) {
+        alert('Delete failed: ' + err.message);
+        showToast('❌ Delete failed: ' + err.message, 'error');
     }
 }
 

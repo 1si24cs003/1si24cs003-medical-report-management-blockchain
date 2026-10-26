@@ -681,6 +681,18 @@ body {
     box-shadow: var(--glow-red);
 }
 
+.btn-delete {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.35);
+    color: #f87171;
+}
+
+.btn-delete:hover {
+    background: rgba(239, 68, 68, 0.25);
+    border-color: #ef4444;
+    box-shadow: 0 0 14px rgba(239, 68, 68, 0.35);
+}
+
 /* ==========================================================================
    CHRONOLOGICAL MEDICAL HISTORY TIMELINE (Obj 1 & 3)
    ========================================================================== */

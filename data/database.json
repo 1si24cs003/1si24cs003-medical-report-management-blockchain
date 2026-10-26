@@ -109,6 +109,46 @@
   ],
   "reports": [
     {
+      "reportId": "REP-0C259B06",
+      "patientId": "usr_pat_01",
+      "patientName": "John Doe",
+      "patientPseudonym": "PT-9901",
+      "uploadedBy": "Alex Smith",
+      "uploaderId": "usr_lab_01",
+      "uploaderRole": "Lab Staff",
+      "title": "test2",
+      "reportType": "Pathology / Biochemistry",
+      "testDate": "2026-10-26",
+      "notes": "",
+      "keywords": [],
+      "categories": [],
+      "aiHighlights": {
+        "keyFindings": [
+          "Investigation: test2"
+        ],
+        "abnormalFlags": [
+          "No critical out-of-range anomalies flagged"
+        ],
+        "diagnosticImpression": "Investigated parameters appear consistent with expected clinical thresholds or baseline physiological limits.",
+        "recommendedAction": "Maintain routine clinical observation and follow-up as indicated by attending specialist.",
+        "aiEngine": "Local Clinical NLP (Fallback: Unterminated string in JSON at position ...)",
+        "analyzedAt": "2026-10-26T07:50:57.968Z"
+      },
+      "rawSnippet": "",
+      "fileName": "OMC Report Sample - Cardio2.pdf",
+      "mimeType": "application/pdf",
+      "reportHash": "b8028574117c97be352712c88bd7ea5a090335c70413c0628bbbb03c8e2476bb",
+      "storageReference": "REP-0C259B06_encrypted.bin",
+      "fileSize": 41014,
+      "encryptedSize": 41040,
+      "qrCodeDataUrl": "data:image/png;base64,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",
+      "verificationUrl": "http://localhost:3000/verify.html?reportId=REP-0C259B06",
+      "blockIndex": 11,
+      "blockHash": "002ad3e45f369536a1bc76fa48dd0940b679039dcc3910c334ff89c2c5705aa2",
+      "createdAt": "2026-10-26T07:50:58.002Z",
+      "status": "ANCHORED_ON_BLOCKCHAIN"
+    },
+    {
       "reportId": "REP-51BAF385",
       "patientId": "usr_pat_01",
       "patientName": "John Doe",
@@ -1099,6 +1139,167 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "log_1793002168901_fjbe",
+      "action": "REPORT_DELETED",
+      "actor": "Alex Smith",
+      "details": "Report REP-02C0B824 (\"Automated Test Blood Glucose PDF\") deleted from storage and active registry by Lab Staff Alex Smith",
+      "timestamp": "2026-10-26T08:09:28.901Z"
+    },
+    {
+      "id": "log_1793002168898_7g4q",
+      "action": "ANTI_FORGERY_VERIFICATION",
+      "actor": "Doctor / Verification Scanner",
+      "details": "Verification check on REP-02C0B824: MATCH (Authentic)",
+      "timestamp": "2026-10-26T08:09:28.898Z"
+    },
+    {
+      "id": "log_1793002168894_145f",
+      "action": "REPORT_DECRYPTED",
+      "actor": "Alex Smith",
+      "details": "Decrypted and accessed report REP-02C0B824",
+      "timestamp": "2026-10-26T08:09:28.894Z"
+    },
+    {
+      "id": "log_1793002168887_jtlz",
+      "action": "REPORT_UPLOADED",
+      "actor": "Alex Smith",
+      "details": "Uploaded report REP-02C0B824 for patient John Doe. Anchored to Block #12",
+      "timestamp": "2026-10-26T08:09:28.887Z"
+    },
+    {
+      "id": "log_1793002142518_12el",
+      "action": "USER_LOGIN",
+      "actor": "Alex Smith",
+      "details": "User authenticated successfully with role: Lab Staff",
+      "timestamp": "2026-10-26T08:09:02.518Z"
+    },
+    {
+      "id": "log_1793001209912_dges",
+      "action": "USER_LOGIN",
+      "actor": "Dr. Sarah Rao",
+      "details": "User authenticated successfully with role: Doctor",
+      "timestamp": "2026-10-26T07:53:29.912Z"
+    },
+    {
+      "id": "log_1793001164258_b5ba",
+      "action": "USER_LOGIN",
+      "actor": "Consortium SuperAdmin",
+      "details": "User authenticated successfully with role: Admin",
+      "timestamp": "2026-10-26T07:52:44.258Z"
+    },
+    {
+      "id": "log_1793001135615_pjre",
+      "action": "REPORT_DECRYPTED",
+      "actor": "Dr. Sarah Rao",
+      "details": "Decrypted and accessed report REP-51BAF385",
+      "timestamp": "2026-10-26T07:52:15.615Z"
+    },
+    {
+      "id": "log_1793001109469_csqo",
+      "action": "REPORT_DECRYPTED",
+      "actor": "Dr. Sarah Rao",
+      "details": "Decrypted and accessed report REP-51BAF385",
+      "timestamp": "2026-10-26T07:51:49.469Z"
+    },
+    {
+      "id": "log_1793001099508_9u7d",
+      "action": "REPORT_DECRYPTED",
+      "actor": "Dr. Sarah Rao",
+      "details": "Decrypted and accessed report REP-0C259B06",
+      "timestamp": "2026-10-26T07:51:39.508Z"
+    },
+    {
+      "id": "log_1793001093821_l00t",
+      "action": "ANTI_FORGERY_VERIFICATION",
+      "actor": "Doctor / Verification Scanner",
+      "details": "Verification check on REP-0C259B06: MATCH (Authentic)",
+      "timestamp": "2026-10-26T07:51:33.821Z"
+    },
+    {
+      "id": "log_1793001084909_8koz",
+      "action": "REPORT_DECRYPTED",
+      "actor": "Dr. Sarah Rao",
+      "details": "Decrypted and accessed report REP-0C259B06",
+      "timestamp": "2026-10-26T07:51:24.909Z"
+    },
+    {
+      "id": "log_1793001081571_e2sq",
+      "action": "REPORT_DECRYPTED",
+      "actor": "Dr. Sarah Rao",
+      "details": "Decrypted and accessed report REP-0C259B06",
+      "timestamp": "2026-10-26T07:51:21.571Z"
+    },
+    {
+      "id": "log_1793001065845_z6ir",
+      "action": "REPORT_DECRYPTED",
+      "actor": "Dr. Sarah Rao",
+      "details": "Decrypted and accessed report REP-0C259B06",
+      "timestamp": "2026-10-26T07:51:05.845Z"
+    },
+    {
+      "id": "log_1793001062673_mipi",
+      "action": "USER_LOGIN",
+      "actor": "Dr. Sarah Rao",
+      "details": "User authenticated successfully with role: Doctor",
+      "timestamp": "2026-10-26T07:51:02.673Z"
+    },
+    {
+      "id": "log_1793001058004_3ybw",
+      "action": "REPORT_UPLOADED",
+      "actor": "Alex Smith",
+      "details": "Uploaded report REP-0C259B06 for patient John Doe. Anchored to Block #11",
+      "timestamp": "2026-10-26T07:50:58.004Z"
+    },
+    {
+      "id": "log_1793001048414_oxpj",
+      "action": "USER_LOGIN",
+      "actor": "Alex Smith",
+      "details": "User authenticated successfully with role: Lab Staff",
+      "timestamp": "2026-10-26T07:50:48.414Z"
+    },
+    {
+      "id": "log_1793000640818_rf6r",
+      "action": "USER_LOGIN",
+      "actor": "Dr. Sarah Rao",
+      "details": "User authenticated successfully with role: Doctor",
+      "timestamp": "2026-10-26T07:44:00.818Z"
+    },
+    {
+      "id": "log_1793000279637_3r48",
+      "action": "BLOCKCHAIN_INTEGRITY_AUDIT",
+      "actor": "System Auditor",
+      "details": "Full chain integrity verification: VALID",
+      "timestamp": "2026-10-26T07:37:59.637Z"
+    },
+    {
+      "id": "log_1793000262180_d9cx",
+      "action": "USER_LOGIN",
+      "actor": "Dr. Sarah Rao",
+      "details": "User authenticated successfully with role: Doctor",
+      "timestamp": "2026-10-26T07:37:42.180Z"
+    },
+    {
+      "id": "log_1792999871895_5d1n",
+      "action": "USER_LOGIN",
+      "actor": "Dr. Sarah Rao",
+      "details": "User authenticated successfully with role: Doctor",
+      "timestamp": "2026-10-26T07:31:11.895Z"
+    },
+    {
+      "id": "log_1792999576187_x6vn",
+      "action": "USER_LOGIN",
+      "actor": "Alex Smith",
+      "details": "User authenticated successfully with role: Lab Staff",
+      "timestamp": "2026-10-26T07:26:16.187Z"
+    },
+    {
+      "id": "log_1792999573598_u8wk",
+      "action": "USER_LOGIN",
+      "actor": "Dr. Sarah Rao",
+      "details": "User authenticated successfully with role: Doctor",
+      "timestamp": "2026-10-26T07:26:13.598Z"
+    },
     {
       "id": "log_1792944877096_5hzd",
       "action": "USER_LOGIN",

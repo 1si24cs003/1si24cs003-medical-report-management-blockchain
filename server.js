@@ -71,6 +71,9 @@ app.post('/api/reports/upload', authenticate, authorizeRoles('Lab Staff', 'Admin
 // Update medical report clinical notes (Restricted: Doctor & Admin)
 app.put('/api/reports/:reportId', authenticate, authorizeRoles('Doctor', 'Admin'), reportController.updateReport);
 
+// Delete medical report (Restricted: Lab Staff, Admin, Doctor)
+app.delete('/api/reports/:reportId', authenticate, authorizeRoles('Lab Staff', 'Admin', 'Doctor'), reportController.deleteReport);
+
 // Retrieve reports (Role-based access & search)
 app.get('/api/reports', authenticate, reportController.getReports);
 app.get('/api/reports/search', authenticate, reportController.searchReports);

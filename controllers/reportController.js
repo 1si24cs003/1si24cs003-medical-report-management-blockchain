@@ -107,40 +107,44 @@ async function uploadReport(req, res) {
         });
 
         let finalBuffer = rawBuffer;
-        let finalMimeType = req.file.mimetype;
-        let finalFileName = req.file.originalname;
+        let finalMimeType = 'application/pdf';
+        let finalFileName = `${reportId}_standardized.pdf`;
 
-        // If an image or text scan was uploaded, synthesize authentic NABH-certified clinical PDF with embedded QR
-        if (req.file.mimetype.startsWith('image/') || req.file.mimetype === 'text/plain') {
-            try {
-                const reportStub = {
-                    reportId,
-                    title: title || 'Clinical Diagnostic Report',
-                    patientName: targetPatient.name,
-                    patientPseudonym: targetPatient.patientId || 'PT-' + targetPatient.id.slice(-4),
-                    patientId: targetPatient.id,
-                    age: targetPatient.age || 48,
-                    gender: targetPatient.gender || 'Not Specified',
-                    uploadedBy: user.name,
-                    nodeId: nodeId || (user.role === 'Lab Staff' ? 'NODE-LAB-01' : 'NODE-HOSP-01'),
-                    reportType: reportType || 'Diagnostic Investigation',
-                    testDate: testDate || new Date().toISOString().split('T')[0],
-                    notes: notes || '',
-                    clinicalImpression: aiHighlights.diagnosticImpression,
-                    aiHighlights,
-                    rawSnippet: ocrResult.rawSnippet || '',
-                    keywords: extractedKeywords,
-                    blockIndex: (blockchain.chain.length)
-                };
-                const generatedPdf = await generateMedicalReportPDF(reportStub, hostUrl);
-                if (generatedPdf && generatedPdf.length > 0) {
-                    finalBuffer = generatedPdf;
-                    finalMimeType = 'application/pdf';
-                    finalFileName = `${reportId}_standardized.pdf`;
-                }
-            } catch (pdfErr) {
-                console.warn('[Upload] Standardized PDF synthesis fallback:', pdfErr.message);
+        // Synthesize authentic NABH-certified clinical PDF with embedded QR code, AI summary & consortium header
+        try {
+            const reportStub = {
+                reportId,
+                title: title || 'Clinical Diagnostic Report',
+                patientName: targetPatient.name,
+                patientPseudonym: targetPatient.patientId || 'PT-' + targetPatient.id.slice(-4),
+                patientId: targetPatient.id,
+                age: targetPatient.age || 48,
+                gender: targetPatient.gender || 'Not Specified',
+                uploadedBy: user.name,
+                nodeId: nodeId || (user.role === 'Lab Staff' ? 'NODE-LAB-01' : 'NODE-HOSP-01'),
+                reportType: reportType || 'Diagnostic Investigation',
+                testDate: testDate || new Date().toISOString().split('T')[0],
+                notes: notes || '',
+                clinicalImpression: aiHighlights.diagnosticImpression,
+                aiHighlights,
+                rawSnippet: ocrResult.rawSnippet || '',
+                sampleContent: ocrResult.extractedText || ocrResult.rawSnippet || notes || 'Clinical diagnostic investigation completed according to certified medical protocol.',
+                keywords: extractedKeywords,
+                blockIndex: (blockchain.chain.length),
+                reportHash: fileHash
+            };
+            const generatedPdf = await generateMedicalReportPDF(reportStub, hostUrl);
+            if (generatedPdf && generatedPdf.length > 0) {
+                finalBuffer = generatedPdf;
+                finalMimeType = 'application/pdf';
+                finalFileName = `${reportId}_standardized.pdf`;
+                console.log(`[Upload] Standardized clinical PDF synthesized for ${reportId} with embedded QR verification seal.`);
             }
+        } catch (pdfErr) {
+            console.warn('[Upload] Standardized PDF synthesis fallback:', pdfErr.message);
+            finalBuffer = rawBuffer;
+            finalMimeType = req.file.mimetype;
+            finalFileName = req.file.originalname;
         }
 
         // Step 5: OFF-CHAIN AES-256-CBC ENCRYPTION
@@ -417,6 +421,68 @@ function updateReport(req, res) {
     }
 }
 
+/**
+ * Delete a medical report
+ * Allowed roles: Lab Staff, Admin, Doctor
+ * Removes off-chain encrypted file and unlists report from database registry
+ */
+async function deleteReport(req, res) {
+    try {
+        const user = req.user;
+        const { reportId } = req.params;
+
+        if (!user || (user.role !== 'Lab Staff' && user.role !== 'Admin' && user.role !== 'Doctor')) {
+            return res.status(403).json({
+                success: false,
+                message: `Permission denied. Role '${user ? user.role : 'Guest'}' cannot delete reports.`
+            });
+        }
+
+        const report = db.findReportById(reportId);
+        if (!report) {
+            return res.status(404).json({
+                success: false,
+                message: `Report ${reportId} not found in database registry.`
+            });
+        }
+
+        // Delete off-chain encrypted physical storage file if exists
+        if (report.storageReference) {
+            const filePath = path.join(UPLOADS_DIR, report.storageReference);
+            if (fs.existsSync(filePath)) {
+                try {
+                    fs.unlinkSync(filePath);
+                    console.log(`[Delete] Deleted encrypted storage file: ${report.storageReference}`);
+                } catch (fileErr) {
+                    console.warn(`[Delete] Could not unlink file ${filePath}:`, fileErr.message);
+                }
+            }
+        }
+
+        // Remove from database
+        db.deleteReport(reportId);
+
+        // Audit Trail
+        db.logAudit(
+            'REPORT_DELETED',
+            user.name,
+            `Report ${reportId} ("${report.title}") deleted from storage and active registry by ${user.role} ${user.name}`
+        );
+
+        return res.json({
+            success: true,
+            message: `Report ${reportId} ("${report.title}") deleted successfully.`,
+            reportId
+        });
+    } catch (err) {
+        console.error('[deleteReport Error]:', err);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to delete report: ' + err.message
+        });
+    }
+}
+
 module.exports = {
     uploadReport,
     getReports,
@@ -424,5 +490,6 @@ module.exports = {
     getReportById,
     downloadDecryptedReport,
     searchReports,
-    updateReport
+    updateReport,
+    deleteReport
 };

@@ -207,6 +207,16 @@ class Database {
         return null;
     }
 
+    deleteReport(reportId) {
+        const index = this.reports.findIndex(r => r.reportId === reportId || r.id === reportId);
+        if (index !== -1) {
+            const removed = this.reports.splice(index, 1)[0];
+            this.persist();
+            return removed;
+        }
+        return null;
+    }
+
     // --- Time-Expiring Shared Access Links ---
     addSharedLink(linkData) {
         this.sharedLinks.push(linkData);

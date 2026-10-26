@@ -195,5 +195,41 @@
     "previousHash": "002c52c63856ab68acf72f807fc835077dacf108bdf8d87dd14ff5378068c11e",
     "nonce": 88,
     "hash": "0042e26d2fd70d7a4a6af9dfe4381b780c61c27dc6da3b35375f21823b183ace"
+  },
+  {
+    "index": 11,
+    "timestamp": "2026-10-26T07:50:58.001Z",
+    "data": {
+      "reportId": "REP-0C259B06",
+      "reportHash": "b8028574117c97be352712c88bd7ea5a090335c70413c0628bbbb03c8e2476bb",
+      "storageReference": "REP-0C259B06_encrypted.bin",
+      "reportType": "Pathology / Biochemistry",
+      "testDate": "2026-10-26",
+      "patientPseudonym": "PT-9901",
+      "institutionNode": "Pathology Diagnostics Lab Node",
+      "nodeId": "NODE-LAB-01",
+      "recordedAt": "2026-10-26T07:50:58.001Z"
+    },
+    "previousHash": "0042e26d2fd70d7a4a6af9dfe4381b780c61c27dc6da3b35375f21823b183ace",
+    "nonce": 3,
+    "hash": "002ad3e45f369536a1bc76fa48dd0940b679039dcc3910c334ff89c2c5705aa2"
+  },
+  {
+    "index": 12,
+    "timestamp": "2026-10-26T08:09:28.881Z",
+    "data": {
+      "reportId": "REP-02C0B824",
+      "reportHash": "5e0d0841efab0809a7e46903ab3339b3f6d10f5224e7a81a89a41c64e1cb7bef",
+      "storageReference": "REP-02C0B824_encrypted.bin",
+      "reportType": "Pathology / Biochemistry",
+      "testDate": "2026-10-26",
+      "patientPseudonym": "PT-9901",
+      "institutionNode": "Pathology Diagnostics Lab Node",
+      "nodeId": "NODE-LAB-01",
+      "recordedAt": "2026-10-26T08:09:28.881Z"
+    },
+    "previousHash": "002ad3e45f369536a1bc76fa48dd0940b679039dcc3910c334ff89c2c5705aa2",
+    "nonce": 1233,
+    "hash": "0068d130088efa29b5cf3573a6ded9dd3b0bc4d8ea880cdb7fc743ee14614d49"
   }
 ]

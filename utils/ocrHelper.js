@@ -88,10 +88,28 @@ async function processReportOCR(inputBufferOrPath, mimeType = '', hintText = '')
         // PDF or plain document stream inspection
         if (Buffer.isBuffer(inputBufferOrPath)) {
             const raw = inputBufferOrPath.toString('latin1');
-            // Extract text tokens from PDF streams
-            const textMatches = raw.match(/\(([^()]+)\)\s*Tj/g) || [];
-            const pdfText = textMatches.map(m => m.replace(/^\(|\)\s*Tj$/g, '')).join(' ');
-            extractedText += ' ' + pdfText;
+            // Extract text tokens from PDF streams: Tj and TJ operators
+            const tjMatches = raw.match(/\(([^()]+)\)\s*Tj/g) || [];
+            const tjText = tjMatches.map(m => m.replace(/^\(|\)\s*Tj$/g, '')).join(' ');
+
+            const tjArrayMatches = raw.match(/\[(.*?)\]\s*TJ/g) || [];
+            const arrayText = tjArrayMatches.map(arr => {
+                const parts = arr.match(/\(([^()]+)\)/g) || [];
+                return parts.map(p => p.slice(1, -1)).join(' ');
+            }).join(' ');
+
+            // Clean readable words from text runs
+            const asciiMatches = raw.match(/[a-zA-Z0-9\s.,:%/\-–]{4,}/g) || [];
+            const pdfKeywords = new Set(['stream', 'endstream', 'endobj', 'Font', 'Type', 'Subtype', 'Widths', 'Filter', 'FlateDecode', 'Length', 'Pages', 'Catalog']);
+            const cleanAscii = asciiMatches
+                .filter(w => !pdfKeywords.has(w.trim()) && !/^\s*\/[a-zA-Z]+/.test(w))
+                .slice(0, 60)
+                .join(' ');
+
+            const combinedPdfText = [tjText, arrayText, cleanAscii].filter(Boolean).join(' ');
+            if (combinedPdfText.trim()) {
+                extractedText += ' ' + combinedPdfText;
+            }
         }
     }
 
