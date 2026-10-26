@@ -177,5 +177,23 @@
     "previousHash": "00ab33c975a1a9a298af6d61474d4d732946ecd5d1660fda5d8dbb4d0a03910b",
     "nonce": 598,
     "hash": "002c52c63856ab68acf72f807fc835077dacf108bdf8d87dd14ff5378068c11e"
+  },
+  {
+    "index": 10,
+    "timestamp": "2026-10-23T07:34:54.411Z",
+    "data": {
+      "reportId": "REP-51BAF385",
+      "reportHash": "7b61cce82fed5e5f2765d38196dbfcb3817c76a821756edb3c1bc46f0c4115db",
+      "storageReference": "REP-51BAF385_encrypted.bin",
+      "reportType": "Cardiovascular",
+      "testDate": "2026-10-23",
+      "patientPseudonym": "PT-9901",
+      "institutionNode": "Pathology Diagnostics Lab Node",
+      "nodeId": "NODE-LAB-01",
+      "recordedAt": "2026-10-23T07:34:54.411Z"
+    },
+    "previousHash": "002c52c63856ab68acf72f807fc835077dacf108bdf8d87dd14ff5378068c11e",
+    "nonce": 88,
+    "hash": "0042e26d2fd70d7a4a6af9dfe4381b780c61c27dc6da3b35375f21823b183ace"
   }
 ]

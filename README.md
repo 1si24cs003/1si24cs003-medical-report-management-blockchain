@@ -262,6 +262,21 @@ All demo accounts use the standard consortium password: `password123` (or 1-clic
 
 ---
 
+## 📊 Phase-II Academic Presentation & Report Figures (SIT 2026-27)
+
+Per the **Siddaganga Institute of Technology, Dept. of CSE Mini Project Phase-II Guidelines**, the academic presentation and report deliverables include:
+
+1. **Interactive Web Presentation Deck (20 Slides):**
+   * Accessible in the running web application at: [http://localhost:3000/presentation.html](http://localhost:3000/presentation.html)
+   * Follows the exact 18–20 slide requirement from the college circular (Title with student details, Introduction, 15-paper Literature Survey, Limitations, Objectives, Requirements, System Design & Architecture, Implementation & Code, Results Demo, Timeline Gantt, Conclusion, References).
+   * Slide-by-slide spoken script and speaker notes: [`docs/PHASE2_PRESENTATION.md`](docs/PHASE2_PRESENTATION.md)
+2. **Project Report Deliverables (Chapters 6 & 7):**
+   * **Figure 6.1 (Chapter 6: Implementation Details):** [`docs/images/fig_6_1_implementation_pipeline.png`](docs/images/fig_6_1_implementation_pipeline.png) — *Implementation Flow of AES-256 Off-Chain Encryption, SHA-256 Duplicate Check, and Blockchain Block Mining Pipeline*.
+   * **Figure 7.1 (Chapter 7: Results):** [`docs/images/fig_7_1_results_dashboard.png`](docs/images/fig_7_1_results_dashboard.png) — *Experimental Results & Operational Verification: (a) Duplicate Detection Rejection (HTTP 409 Conflict), (b) QR Code Anti-Forgery Verification (Authentic vs Tampered), and (c) System Execution Times*.
+   * Complete placement guide, captions, and LaTeX snippets: [`docs/REPORT_IMAGE_PLACEMENT_GUIDE.md`](docs/REPORT_IMAGE_PLACEMENT_GUIDE.md)
+
+---
+
 ## 🧪 Live Evaluation Demonstration Flow
 
 Follow this structured workflow during evaluation demonstrations:

@@ -109,6 +109,54 @@
   ],
   "reports": [
     {
+      "reportId": "REP-51BAF385",
+      "patientId": "usr_pat_01",
+      "patientName": "John Doe",
+      "patientPseudonym": "PT-9901",
+      "uploadedBy": "Alex Smith",
+      "uploaderId": "usr_lab_01",
+      "uploaderRole": "Lab Staff",
+      "title": "test",
+      "reportType": "Cardiovascular",
+      "testDate": "2026-10-23",
+      "notes": "",
+      "keywords": [
+        "Blood pressure",
+        "Hypertension"
+      ],
+      "categories": [
+        "Cardiovascular"
+      ],
+      "aiHighlights": {
+        "keyFindings": [
+          "Investigation: test",
+          "PATIENT DETAILS",
+          "Name: Jane Doe DOB: 50",
+          "Age: 1975-04-30 Gender: Female"
+        ],
+        "abnormalFlags": [
+          "No critical out-of-range anomalies flagged"
+        ],
+        "diagnosticImpression": "Investigated parameters appear consistent with expected clinical thresholds or baseline physiological limits.",
+        "recommendedAction": "Maintain routine clinical observation and follow-up as indicated by attending specialist.",
+        "aiEngine": "Local Clinical NLP (Fallback: Unterminated string in JSON at position ...)",
+        "analyzedAt": "2026-10-23T07:34:54.219Z"
+      },
+      "rawSnippet": "PATIENT DETAILS\n\nName: Jane Doe DOB: 50\n\nAge: 1975-04-30 Gender: Female\nMEDICAL HISTORY\n\nHypertension, start 2015\n\nSurgeries; Appendectomy\n\nAllergies: No known allergies\n\nVITALS\n\n+ Blood pressure 140/mmHg Pulse: 76 bpm\n\n+ Temperature 36,8 °C Respiratory rt: 16 / min\nDOCTOR'S OBSERVATIONS\n\n+ Alert,",
+      "fileName": "REP-51BAF385_standardized.pdf",
+      "mimeType": "application/pdf",
+      "reportHash": "7b61cce82fed5e5f2765d38196dbfcb3817c76a821756edb3c1bc46f0c4115db",
+      "storageReference": "REP-51BAF385_encrypted.bin",
+      "fileSize": 6757,
+      "encryptedSize": 6784,
+      "qrCodeDataUrl": "data:image/png;base64,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",
+      "verificationUrl": "http://localhost:3000/verify.html?reportId=REP-51BAF385",
+      "blockIndex": 10,
+      "blockHash": "0042e26d2fd70d7a4a6af9dfe4381b780c61c27dc6da3b35375f21823b183ace",
+      "createdAt": "2026-10-23T07:34:54.413Z",
+      "status": "ANCHORED_ON_BLOCKCHAIN"
+    },
+    {
       "reportId": "REP-7A91F2C4",
       "patientId": "usr_pat_01",
       "patientName": "John Doe",
@@ -1051,6 +1099,76 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "log_1792944877096_5hzd",
+      "action": "USER_LOGIN",
+      "actor": "Dr. Sarah Rao",
+      "details": "User authenticated successfully with role: Doctor",
+      "timestamp": "2026-10-25T16:14:37.096Z"
+    },
+    {
+      "id": "log_1792837798574_6efu",
+      "action": "USER_LOGIN",
+      "actor": "Dr. Sarah Rao",
+      "details": "User authenticated successfully with role: Doctor",
+      "timestamp": "2026-10-24T10:29:58.574Z"
+    },
+    {
+      "id": "log_1792740907067_o2yx",
+      "action": "REPORT_DECRYPTED",
+      "actor": "Alex Smith",
+      "details": "Decrypted and accessed report REP-51BAF385",
+      "timestamp": "2026-10-23T07:35:07.067Z"
+    },
+    {
+      "id": "log_1792740899873_jtd8",
+      "action": "REPORT_DECRYPTED",
+      "actor": "Alex Smith",
+      "details": "Decrypted and accessed report REP-51BAF385",
+      "timestamp": "2026-10-23T07:34:59.873Z"
+    },
+    {
+      "id": "log_1792740894416_8wts",
+      "action": "REPORT_UPLOADED",
+      "actor": "Alex Smith",
+      "details": "Uploaded report REP-51BAF385 for patient John Doe. Anchored to Block #10",
+      "timestamp": "2026-10-23T07:34:54.416Z"
+    },
+    {
+      "id": "log_1792740848638_k6mu",
+      "action": "USER_LOGIN",
+      "actor": "Alex Smith",
+      "details": "User authenticated successfully with role: Lab Staff",
+      "timestamp": "2026-10-23T07:34:08.638Z"
+    },
+    {
+      "id": "log_1792740803098_z5d4",
+      "action": "REPORT_DECRYPTED",
+      "actor": "Dr. Sarah Rao",
+      "details": "Decrypted and accessed report REP-7A91F2C4",
+      "timestamp": "2026-10-23T07:33:23.098Z"
+    },
+    {
+      "id": "log_1791472311011_h8j1",
+      "action": "ANTI_FORGERY_VERIFICATION",
+      "actor": "Doctor / Verification Scanner",
+      "details": "Verification check on REP-7A91F2C4: MATCH (Authentic)",
+      "timestamp": "2026-10-08T15:11:51.011Z"
+    },
+    {
+      "id": "log_1791472298740_mawb",
+      "action": "ANTI_FORGERY_VERIFICATION",
+      "actor": "Doctor / Verification Scanner",
+      "details": "Verification check on REP-7A91F2C4: MATCH (Authentic)",
+      "timestamp": "2026-10-08T15:11:38.740Z"
+    },
+    {
+      "id": "log_1791472243927_dbb8",
+      "action": "USER_LOGIN",
+      "actor": "Dr. Sarah Rao",
+      "details": "User authenticated successfully with role: Doctor",
+      "timestamp": "2026-10-08T15:10:43.927Z"
+    },
     {
       "id": "log_1791471895050_rya7",
       "action": "ANTI_FORGERY_VERIFICATION",
