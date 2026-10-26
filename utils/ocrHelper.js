@@ -90,25 +90,42 @@ async function processReportOCR(inputBufferOrPath, mimeType = '', hintText = '')
             const raw = inputBufferOrPath.toString('latin1');
             // Extract text tokens from PDF streams: Tj and TJ operators
             const tjMatches = raw.match(/\(([^()]+)\)\s*Tj/g) || [];
-            const tjText = tjMatches.map(m => m.replace(/^\(|\)\s*Tj$/g, '')).join(' ');
+            const tjText = tjMatches.map(m => m.replace(/^\(|\)\s*Tj$/g, '').replace(/\\([()\\])/g, '$1').trim()).filter(Boolean).join(' ');
 
             const tjArrayMatches = raw.match(/\[(.*?)\]\s*TJ/g) || [];
             const arrayText = tjArrayMatches.map(arr => {
                 const parts = arr.match(/\(([^()]+)\)/g) || [];
-                return parts.map(p => p.slice(1, -1)).join(' ');
-            }).join(' ');
+                return parts.map(p => p.slice(1, -1).replace(/\\([()\\])/g, '$1').trim()).filter(Boolean).join(' ');
+            }).filter(Boolean).join(' ');
 
-            // Clean readable words from text runs
-            const asciiMatches = raw.match(/[a-zA-Z0-9\s.,:%/\-–]{4,}/g) || [];
-            const pdfKeywords = new Set(['stream', 'endstream', 'endobj', 'Font', 'Type', 'Subtype', 'Widths', 'Filter', 'FlateDecode', 'Length', 'Pages', 'Catalog']);
-            const cleanAscii = asciiMatches
-                .filter(w => !pdfKeywords.has(w.trim()) && !/^\s*\/[a-zA-Z]+/.test(w))
-                .slice(0, 60)
-                .join(' ');
+            let combinedPdfText = [tjText, arrayText].filter(Boolean).join(' ');
 
-            const combinedPdfText = [tjText, arrayText, cleanAscii].filter(Boolean).join(' ');
+            // Only inspect raw stream runs if standard text operators yielded nothing
+            if (!combinedPdfText.trim()) {
+                const asciiMatches = raw.match(/[A-Za-z0-9][A-Za-z0-9\s.,:%/\-–]{4,}[A-Za-z0-9]/g) || [];
+                const pdfKeywords = new Set([
+                    'stream', 'endstream', 'endobj', 'Font', 'Type', 'Subtype', 'Widths',
+                    'Filter', 'FlateDecode', 'Length', 'Pages', 'Catalog', 'Producer', 'Root',
+                    'AcroForm', 'Contents', 'CropBox', 'MediaBox', 'Parent', 'Resources'
+                ]);
+                const cleanAscii = asciiMatches
+                    .filter(w => {
+                        const trimmed = w.trim();
+                        if (pdfKeywords.has(trimmed) || /^\s*\/[a-zA-Z]+/.test(w)) return false;
+                        // Filter out hex dumps or postscript operator sequences (e.g. "re scn cm")
+                        if (/^[0-9a-fA-F\s]{6,}$/.test(trimmed)) return false;
+                        if (/\b(re|cm|scn|cs|gs|Do|BT|ET|rg|RG)\b/.test(trimmed)) return false;
+                        // Must have at least one vowel to resemble human language
+                        return /[aeiou]/i.test(trimmed);
+                    })
+                    .slice(0, 30)
+                    .join(' ');
+
+                combinedPdfText = cleanAscii;
+            }
+
             if (combinedPdfText.trim()) {
-                extractedText += ' ' + combinedPdfText;
+                extractedText += ' ' + combinedPdfText.replace(/\s+/g, ' ');
             }
         }
     }
