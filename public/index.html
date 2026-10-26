@@ -520,14 +520,42 @@
                             </div>
                         </div>
 
-                        <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-top: 1rem;">
+                        <div style="background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-top: 1rem;">
                             <h4 style="font-size: 0.9rem; color: var(--accent-cyan); margin-bottom: 0.5rem;">Panel Demonstration Trigger:</h4>
-                            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">
+                            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">
                                 Simulate uploading an exact duplicate of John Doe's Fasting Glucose Report.
                             </p>
                             <button class="btn btn-secondary" style="width: 100%; border-color: var(--accent-warning); color: var(--accent-warning);" onclick="simulateDuplicateUpload()">
                                 ⚠️ Test Duplicate Upload Rejection (Obj 2 Demo)
                             </button>
+                        </div>
+
+                        <!-- Demo Test Reports Kit for Panel Evaluation -->
+                        <div style="background: rgba(14, 23, 42, 0.85); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid rgba(0, 229, 255, 0.3); margin-top: 1rem;">
+                            <h4 style="font-size: 0.92rem; color: #fff; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 6px;">
+                                <span>📁</span> <span>Demo Reports Kit (Download & Test Live)</span>
+                            </h4>
+                            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                                Download these prepared PDF test files to demonstrate live upload and duplicate prevention to the panel:
+                            </p>
+                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <a href="/demo-reports/00_TEST_LIVE_UPLOAD_Complete_Blood_Count.pdf" download class="btn btn-primary" style="font-size: 0.8rem; padding: 7px 12px; text-decoration: none; display: flex; justify-content: space-between; align-items: center;">
+                                    <span>📄 1. Test Report for Live Upload (CBC Profile)</span>
+                                    <span>⬇️</span>
+                                </a>
+                                <a href="/demo-reports/00_TEST_DUPLICATE_REJECTION_Fasting_Blood_Sugar.pdf" download class="btn btn-secondary" style="font-size: 0.8rem; padding: 7px 12px; text-decoration: none; display: flex; justify-content: space-between; align-items: center; border-color: rgba(245, 158, 11, 0.4); color: #fde68a;">
+                                    <span>⚠️ 2. Duplicate Report File (Triggers 409 Conflict)</span>
+                                    <span>⬇️</span>
+                                </a>
+                                <a href="/demo-reports/03_Robert_Chen_Brain_MRI_Neuro_Imaging___Diffusi.pdf" download class="btn btn-secondary" style="font-size: 0.8rem; padding: 7px 12px; text-decoration: none; display: flex; justify-content: space-between; align-items: center;">
+                                    <span>🧠 3. Neuro Brain MRI Scan (Robert Chen)</span>
+                                    <span>⬇️</span>
+                                </a>
+                                <a href="/demo-reports/04_Ayesha_Khan_Chest_Digital_Radiography_X_Ray_.pdf" download class="btn btn-secondary" style="font-size: 0.8rem; padding: 7px 12px; text-decoration: none; display: flex; justify-content: space-between; align-items: center;">
+                                    <span>🫁 4. Pulmonary Chest X-Ray (Ayesha Khan)</span>
+                                    <span>⬇️</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

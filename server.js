@@ -41,6 +41,9 @@ app.get('/portal', (req, res) => {
 // Serve frontend static assets (without auto-serving index.html at root)
 app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 
+// Serve evaluation demo reports kit
+app.use('/demo-reports', express.static(path.join(__dirname, 'sample_reports_for_demo')));
+
 // ==========================================
 // 1. AUTHENTICATION & USERS ROUTES
 // ==========================================
