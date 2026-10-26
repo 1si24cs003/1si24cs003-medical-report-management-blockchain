@@ -6,7 +6,8 @@
 **Subject:** 5th Semester Mini Project Phase-II Evaluation  
 **Project Title:** Medical Report Management & Distribution System on Blockchain  
 **Evaluation Dates:** 28th and 29th October 2026 (5:10 PM – 7:00 PM)  
-**Under the Guidance of:** Dr. R. Sumathi (Panel Convener)  
+**Under the Guidance of:** Mrs. Nidhi L. G. (Faculty Guide)  
+**Panel Convener:** Dr. R. Sumathi  
 **Student Presenters:**
 1. **Harsh Kumar Singh** (1SI24CS064)
 2. **Abdullah Saad Sharief** (1SI24CS003)
@@ -31,7 +32,7 @@
 ### Slide 1: Title of the Project & Student Details
 * **Presenter:** Harsh Kumar Singh (1SI24CS064)
 * **Speaking Script:**
-  > *"Respected guide Dr. R. Sumathi, respected panel members, and evaluators, a very good evening. Today, our team—Harsh Kumar Singh, Abdullah Saad Sharief, and H Abhishek—presents the Phase-II evaluation of our V Semester Mini Project titled: **'Medical Report Management & Distribution System on Blockchain'**.*  
+  > *"Respected guide Mrs. Nidhi L. G., respected panel convener Dr. R. Sumathi, respected panel members, and evaluators, a very good evening. Today, our team—Harsh Kumar Singh, Abdullah Saad Sharief, and H Abhishek—presents the Phase-II evaluation of our V Semester Mini Project titled: **'Medical Report Management & Distribution System on Blockchain'**.*  
   > *In this phase, we have completed a rigorous literature survey of 15 recent research papers from 2024 and 2025, formalized our system requirements and 4-tier architectural design, and successfully implemented approximately 85% of our working prototype—far exceeding the college threshold requirement of 50%."*
 
 ---
