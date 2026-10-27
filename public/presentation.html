@@ -636,60 +636,130 @@
         <section class="slide-container" data-slide="12">
             <div class="slide-header">
                 <div class="slide-title-group">
-                    <h2>6. System Design: Algorithms & Cryptographic Models</h2>
-                    <p class="slide-subtitle">SHA-256 Deduplication, AES-256-CBC Pipeline & Blockchain Integrity Formulae</p>
+                    <h2>6. System Design: Algorithms &amp; Cryptographic Models</h2>
+                    <p class="slide-subtitle">Mathematical Proofs, AES-256-CBC Off-Chain Pipeline &amp; Dual-Condition Ledger Integrity</p>
                 </div>
                 <span class="slide-category-badge">Design 3/5</span>
             </div>
             <div class="slide-body">
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;">
-                    <!-- Algorithm 1 -->
-                    <div style="background: rgba(14, 23, 42, 0.7); border: 1px solid rgba(0, 229, 255, 0.3); border-radius: 14px; padding: 1.25rem;">
-                        <span style="font-size: 0.75rem; font-weight: 700; color: var(--pres-cyan); font-family: 'JetBrains Mono', monospace;">ALGORITHM 1</span>
-                        <h4 style="color: #fff; margin: 0.35rem 0 0.5rem; font-size: 0.95rem;">Cryptographic Deduplication</h4>
-                        <p style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 0.75rem;">
-                            Given report byte buffer \( B \):<br>
-                            1. \( H(B) = \text{SHA-256}(B) \)<br>
-                            2. Query ledger for any block \( K \) where \( K.\text{data.reportHash} == H(B) \)<br>
-                            3. If match found: Abort and return <code>409 CONFLICT</code>.<br>
-                            4. If unique: Proceed to AES encryption.
-                        </p>
-                        <div style="font-size: 0.75rem; color: #38bdf8; font-weight: 600;">Time Complexity: O(n) ledger scan / O(1) indexed</div>
+                    
+                    <!-- ALGORITHM 1: Deduplication -->
+                    <div style="background: rgba(14, 23, 42, 0.75); border: 1px solid rgba(0, 229, 255, 0.35); border-radius: 14px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.72rem; font-weight: 800; color: var(--pres-cyan); font-family: 'JetBrains Mono', monospace; background: rgba(0, 229, 255, 0.12); padding: 2px 8px; border-radius: 4px;">ALGORITHM 1</span>
+                                <span style="font-size: 0.7rem; color: #94a3b8; font-weight: 600;">Pre-Flight Gate</span>
+                            </div>
+                            <h4 style="color: #fff; margin: 0 0 0.65rem; font-size: 0.96rem;">Cryptographic Deduplication</h4>
+                            
+                            <!-- Steps -->
+                            <div style="font-size: 0.76rem; color: #cbd5e1; line-height: 1.55;">
+                                <div style="margin-bottom: 6px;">
+                                    <strong style="color: #38bdf8;">1. Compute 256-bit Digest:</strong>
+                                    <div style="background: #090d16; padding: 5px 8px; border-radius: 5px; font-family: 'JetBrains Mono', monospace; color: #a5f3fc; margin: 3px 0; font-size: 0.72rem;">
+                                        H<sub>doc</sub> = SHA-256(B) &isin; {0, 1}<sup>256</sup>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 6px;">
+                                    <strong style="color: #38bdf8;">2. Query Ledger State:</strong>
+                                    <div style="background: #090d16; padding: 5px 8px; border-radius: 5px; font-family: 'JetBrains Mono', monospace; color: #cbd5e1; margin: 3px 0; font-size: 0.72rem;">
+                                        &exist; k &isin; [1..n] : Block[k].reportHash == H<sub>doc</sub>
+                                    </div>
+                                </div>
+                                <div>
+                                    <strong style="color: #38bdf8;">3. Conditional Branch:</strong>
+                                    <ul style="margin: 2px 0 0 14px; padding: 0; font-size: 0.74rem;">
+                                        <li><strong>If Match:</strong> Abort &rarr; <code>409 CONFLICT</code></li>
+                                        <li><strong>If Unique:</strong> Assign ID &rarr; Proceed to AES</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 0.85rem; padding-top: 0.6rem; border-top: 1px solid rgba(255, 255, 255, 0.08); font-size: 0.72rem; color: #38bdf8; font-weight: 600;">
+                            Complexity: O(1) indexed / Collision: 2<sup>128</sup> bound
+                        </div>
                     </div>
 
-                    <!-- Algorithm 2 -->
-                    <div style="background: rgba(14, 23, 42, 0.7); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 14px; padding: 1.25rem;">
-                        <span style="font-size: 0.75rem; font-weight: 700; color: var(--pres-green); font-family: 'JetBrains Mono', monospace;">ALGORITHM 2</span>
-                        <h4 style="color: #fff; margin: 0.35rem 0 0.5rem; font-size: 0.95rem;">AES-256-CBC Off-Chain Encryption</h4>
-                        <p style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 0.75rem;">
-                            1. Generate cryptographically secure random 16-byte \( IV \).<br>
-                            2. Initialize cipher \( C = \text{Cipher}(\text{AES-256-CBC}, K_{\text{master}}, IV) \).<br>
-                            3. Encrypt payload: \( E = C.\text{update}(B) \parallel C.\text{final}() \).<br>
-                            4. Serialize binary: \( \text{Payload} = IV \parallel E \).
-                        </p>
-                        <div style="font-size: 0.75rem; color: #34d399; font-weight: 600;">Security: Indistinguishable under CPA</div>
+                    <!-- ALGORITHM 2: AES-256-CBC -->
+                    <div style="background: rgba(14, 23, 42, 0.75); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 14px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.72rem; font-weight: 800; color: var(--pres-green); font-family: 'JetBrains Mono', monospace; background: rgba(16, 185, 129, 0.12); padding: 2px 8px; border-radius: 4px;">ALGORITHM 2</span>
+                                <span style="font-size: 0.7rem; color: #94a3b8; font-weight: 600;">Off-Chain Storage</span>
+                            </div>
+                            <h4 style="color: #fff; margin: 0 0 0.65rem; font-size: 0.96rem;">AES-256-CBC Encryption &amp; Decryption</h4>
+                            
+                            <!-- Steps -->
+                            <div style="font-size: 0.76rem; color: #cbd5e1; line-height: 1.55;">
+                                <div style="margin-bottom: 6px;">
+                                    <strong style="color: #6ee7b7;">1. Key Derivation &amp; CSPRNG IV:</strong>
+                                    <div style="background: #090d16; padding: 5px 8px; border-radius: 5px; font-family: 'JetBrains Mono', monospace; color: #a7f3d0; margin: 3px 0; font-size: 0.71rem;">
+                                        K<sub>safe</sub> = SHA-256(K<sub>master</sub>) &bull; IV &larr; CSPRNG(16B)
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 6px;">
+                                    <strong style="color: #6ee7b7;">2. PKCS#7 Padding &amp; Cipher:</strong>
+                                    <div style="background: #090d16; padding: 5px 8px; border-radius: 5px; font-family: 'JetBrains Mono', monospace; color: #a7f3d0; margin: 3px 0; font-size: 0.71rem;">
+                                        E = Cipher(AES-256-CBC, K<sub>safe</sub>, IV).encrypt(B)
+                                    </div>
+                                </div>
+                                <div>
+                                    <strong style="color: #6ee7b7;">3. Store &amp; Invert (Decryption):</strong>
+                                    <div style="background: #090d16; padding: 5px 8px; border-radius: 5px; font-family: 'JetBrains Mono', monospace; color: #cbd5e1; margin: 3px 0; font-size: 0.71rem;">
+                                        Payload = IV &parallel; E &nbsp;&harr;&nbsp; B = Decipher(E, K<sub>safe</sub>, IV)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 0.85rem; padding-top: 0.6rem; border-top: 1px solid rgba(255, 255, 255, 0.08); font-size: 0.72rem; color: #34d399; font-weight: 600;">
+                            Security: IND-CPA (Randomized 16B IV per file)
+                        </div>
                     </div>
 
-                    <!-- Algorithm 3 -->
-                    <div style="background: rgba(14, 23, 42, 0.7); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 14px; padding: 1.25rem;">
-                        <span style="font-size: 0.75rem; font-weight: 700; color: #a5b4fc; font-family: 'JetBrains Mono', monospace;">ALGORITHM 3</span>
-                        <h4 style="color: #fff; margin: 0.35rem 0 0.5rem; font-size: 0.95rem;">Block Chaining & Hash Validation</h4>
-                        <p style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 0.75rem;">
-                            Block hash calculation:<br>
-                            \( H_{\text{block}} = \text{SHA-256}(\text{idx} \parallel H_{\text{prev}} \parallel T \parallel \text{Data} \parallel \text{nonce}) \)<br>
-                            Tamper Detection condition:<br>
-                            \( \forall i > 0, \text{Block}[i].H_{\text{prev}} == \text{Block}[i-1].H_{\text{block}} \)
-                        </p>
-                        <div style="font-size: 0.75rem; color: #a5b4fc; font-weight: 600;">Guarantee: Cryptographically Tamper-Evident</div>
+                    <!-- ALGORITHM 3: Block Chaining -->
+                    <div style="background: rgba(14, 23, 42, 0.75); border: 1px solid rgba(99, 102, 241, 0.35); border-radius: 14px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.72rem; font-weight: 800; color: #a5b4fc; font-family: 'JetBrains Mono', monospace; background: rgba(99, 102, 241, 0.15); padding: 2px 8px; border-radius: 4px;">ALGORITHM 3</span>
+                                <span style="font-size: 0.7rem; color: #94a3b8; font-weight: 600;">Consensus Ledger</span>
+                            </div>
+                            <h4 style="color: #fff; margin: 0 0 0.65rem; font-size: 0.96rem;">Block Chaining &amp; Dual Tamper Check</h4>
+                            
+                            <!-- Steps -->
+                            <div style="font-size: 0.76rem; color: #cbd5e1; line-height: 1.55;">
+                                <div style="margin-bottom: 6px;">
+                                    <strong style="color: #c7d2fe;">1. Block Hash Construction:</strong>
+                                    <div style="background: #090d16; padding: 5px 8px; border-radius: 5px; font-family: 'JetBrains Mono', monospace; color: #e0e7ff; margin: 3px 0; font-size: 0.68rem;">
+                                        H<sub>block</sub><sup>(i)</sup> = SHA-256(idx &parallel; H<sub>prev</sub><sup>(i)</sup> &parallel; T &parallel; Data &parallel; nonce)
+                                    </div>
+                                </div>
+                                <div>
+                                    <strong style="color: #c7d2fe;">2. Dual Tamper Detection (&forall; i &gt; 0):</strong>
+                                    <div style="background: #090d16; padding: 5px 8px; border-radius: 5px; font-family: 'JetBrains Mono', monospace; color: #fca5a5; margin: 3px 0; font-size: 0.70rem; line-height: 1.45;">
+                                        &bull; H<sub>block</sub><sup>(i)</sup> == calculateHash(Block[i])<br>
+                                        &bull; Block[i].H<sub>prev</sub> == Block[i-1].H<sub>block</sub>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 0.85rem; padding-top: 0.6rem; border-top: 1px solid rgba(255, 255, 255, 0.08); font-size: 0.72rem; color: #a5b4fc; font-weight: 600;">
+                            Guarantee: Cryptographically Tamper-Evident Immutability
+                        </div>
                     </div>
+
                 </div>
 
-                <div class="tech-banner" style="margin-top: 1.25rem;">
-                    Mathematical Foundation: 256-bit collision resistance ensures zero duplicate hash collisions across \( 2^{128} \) uploads.
+                <div class="tech-banner" style="margin-top: 1.25rem; font-size: 0.82rem; display: flex; justify-content: space-between; align-items: center;">
+                    <span>🛡️ <strong>Security Guarantees:</strong> 256-bit collision resistance ensures zero duplicate collisions across 2<sup>128</sup> uploads. AES-256-CBC random IV prevents frequency attacks.</span>
+                    <span style="color: var(--pres-cyan); font-weight: 700; white-space: nowrap; margin-left: 1rem;">NIST &amp; HIPAA Compliant</span>
                 </div>
             </div>
             <div class="slide-footer">
-                <span>Formal Algorithms & Cryptographic Specifications</span>
+                <span>Formal Algorithms &amp; Cryptographic Specifications</span>
                 <span>Chapter 5, Section 5.1 (Page 8 of Report)</span>
             </div>
         </section>
